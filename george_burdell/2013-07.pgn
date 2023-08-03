@@ -1,0 +1,25 @@
+[Event "Let's Play!"]
+[Site "Chess.com"]
+[Date "2013.07.22"]
+[Round "-"]
+[White "george_burdell"]
+[Black "alex_r_perey"]
+[Result "0-1"]
+[CurrentPosition "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 1 2"]
+[Timezone "UTC"]
+[ECO "B20"]
+[ECOUrl "https://www.chess.com/openings/Sicilian-Defense"]
+[UTCDate "2013.07.22"]
+[UTCTime "05:00:38"]
+[WhiteElo "1200"]
+[BlackElo "1559"]
+[TimeControl "1/259200"]
+[Termination "alex_r_perey won on time"]
+[StartTime "05:00:38"]
+[EndDate "2013.07.25"]
+[EndTime "05:32:01"]
+[Link "https://www.chess.com/game/daily/73166170"]
+
+1. e4 c5 0-1
+
+

@@ -1,0 +1,25 @@
+[Event "Live Chess"]
+[Site "Chess.com"]
+[Date "2012.08.14"]
+[Round "-"]
+[White "george_burdell"]
+[Black "Omarkayum"]
+[Result "0-1"]
+[CurrentPosition "r1b2rk1/pp2bppp/2n5/2p1p3/1p1qP3/3P3N/P3P1PP/1RBQKB1R w K -"]
+[Timezone "UTC"]
+[ECO "A30"]
+[ECOUrl "https://www.chess.com/openings/English-Opening-Symmetrical-Variation-2.b3"]
+[UTCDate "2012.08.14"]
+[UTCTime "21:16:15"]
+[WhiteElo "1061"]
+[BlackElo "1283"]
+[TimeControl "600"]
+[Termination "Omarkayum won - game abandoned"]
+[StartTime "21:16:15"]
+[EndDate "2012.08.14"]
+[EndTime "21:21:42"]
+[Link "https://www.chess.com/game/live/344805305"]
+
+1. c4 {[%clk 0:10:00]} 1... c5 {[%clk 0:10:00]} 2. b3 {[%clk 0:09:57.5]} 2... e5 {[%clk 0:09:57]} 3. Nc3 {[%clk 0:09:53.3]} 3... d6 {[%clk 0:09:54.9]} 4. Ne4 {[%clk 0:09:44.6]} 4... Nf6 {[%clk 0:09:52]} 5. f3 {[%clk 0:09:34.9]} 5... Be7 {[%clk 0:09:48.9]} 6. Nh3 {[%clk 0:09:20]} 6... Nxe4 {[%clk 0:09:45.7]} 7. fxe4 {[%clk 0:09:17.5]} 7... Nc6 {[%clk 0:09:41.7]} 8. b4 {[%clk 0:08:47.7]} 8... cxb4 {[%clk 0:09:39.1]} 9. c5 {[%clk 0:08:44.6]} 9... dxc5 {[%clk 0:09:33.4]} 10. Rb1 {[%clk 0:08:36.1]} 10... O-O {[%clk 0:09:28.6]} 11. d3 {[%clk 0:08:28.8]} 11... Qd4 {[%clk 0:09:15.2]} 0-1
+
+
