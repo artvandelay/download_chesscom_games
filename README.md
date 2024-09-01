@@ -19,12 +19,14 @@ This script downloads a user's games from Chess.com and saves them as PGN files.
 ## Installation
 
 1. Clone the repository:
+
     ```sh
     git clone https://github.com/yourusername/chesscom-games-downloader.git
     cd chesscom-games-downloader
     ```
 
 2. Install the required libraries:
+
     ```sh
     pip install requests
     ```
@@ -32,5 +34,6 @@ This script downloads a user's games from Chess.com and saves them as PGN files.
 ## Usage
 
 To run the script, use the following command:
+
 ```sh
 python download_chesscom_games.py <username1> <username2> ... <base_directory>
