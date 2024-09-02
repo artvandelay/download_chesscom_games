@@ -1,0 +1,72 @@
+# Chess Game Analysis Report
+
+## Win Loss Statistics
+- Wins: 60
+- Losses: 57
+- Draws: 11
+
+## Opening Analysis
+- E60: 3
+- A52: 1
+- B06: 11
+- A45: 4
+- A01: 12
+- A00: 16
+- A41: 3
+- A06: 7
+- D00: 2
+- B11: 1
+- A40: 5
+- B10: 2
+- B00: 4
+- A04: 8
+- B51: 1
+- A43: 1
+- C47: 1
+- C27: 1
+- B50: 2
+- B07: 2
+- C25: 1
+- D02: 1
+- C28: 1
+- A18: 1
+- B52: 1
+- B53: 1
+- D15: 1
+- C70: 2
+- B12: 2
+- A08: 1
+- A47: 1
+- C65: 2
+- A15: 1
+- B15: 1
+- C40: 1
+- B04: 2
+- A88: 1
+- E50: 1
+- C72: 1
+- B01: 1
+- C21: 1
+- B24: 1
+- C50: 1
+- B43: 1
+- C53: 1
+- E48: 1
+- A80: 1
+- B22: 2
+- B42: 1
+- D35: 1
+- A46: 1
+- C44: 1
+- D40: 1
+- A53: 1
+- B02: 1
+- C97: 1
+
+## Move Quality
+- Excellent: 128
+- Good: 128
+- Inaccuracies: 128
+- Mistakes: 128
+- Blunders: 128
+

@@ -1,0 +1,6 @@
+output_format: "markdown"
+analysis_depth: "overview"
+sections:
+  win_loss_draw: true
+  opening_analysis: true
+  move_quality: true
