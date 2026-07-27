@@ -3,66 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; worker-src 'self' https://unpkg.com; style-src 'self'; connect-src https://api.chess.com https://api.openai.com https://api.anthropic.com https://generativelanguage.googleapis.com https://openrouter.ai https://unpkg.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
-  <title>Tilt Mirror</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; worker-src 'self' https://unpkg.com; style-src 'self'; font-src 'self'; connect-src https://api.chess.com https://api.openai.com https://api.anthropic.com https://generativelanguage.googleapis.com https://openrouter.ai https://unpkg.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
+  <title>Tilt Mirror — psychological patterns in your chess games</title>
+  <meta name="description" content="Find the recurring psychological patterns in your own chess games. Runs entirely in your browser with your own LLM API key.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23171b22'/%3E%3Cpath d='M7 25 25 7v18z' fill='%235aa9f8'/%3E%3Cpath d='M7 25 25 7H7z' fill='%235aa9f8' opacity='.28'/%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Tilt Mirror</h1>
-    <p>Your games. Your patterns. Your own LLM key.</p>
+  <a class="skip-link" href="#output">Skip to report</a>
+
+  <header class="masthead">
+    <div class="masthead__inner">
+      <h1 class="wordmark">Tilt Mirror</h1>
+      <p class="masthead__tagline">The recurring psychological patterns in your own chess games — time panic, tilt after a loss, session fatigue, ego losses. Runs entirely in your browser, with your own API key.</p>
+    </div>
   </header>
-  <main>
-    <section>
-      <h2>1 · Your games</h2>
-      <div class="tabs">
-        <button id="tab-username">Chess.com username</button>
-        <button id="tab-upload">Upload PGN files</button>
+
+  <main class="workspace">
+    <form class="rail" id="setup" novalidate autocomplete="off">
+
+      <section class="step" aria-labelledby="title-games">
+        <div class="step__head">
+          <span class="step__num" aria-hidden="true">01</span>
+          <h2 class="step__title" id="title-games">Your games</h2>
+        </div>
+
+        <div class="field">
+          <label for="input-username">Chess.com username</label>
+          <input id="input-username" type="text" placeholder="e.g. darshak05" spellcheck="false" autocapitalize="none">
+          <p class="hint">Needed either way — it's how the analysis knows which side of the board is you.</p>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="How to load your games">
+          <button type="button" class="tab" id="tab-username" role="tab" aria-controls="panel-username" aria-selected="true">Fetch</button>
+          <button type="button" class="tab" id="tab-upload" role="tab" aria-controls="panel-upload" aria-selected="false" tabindex="-1">Upload PGN</button>
+        </div>
+
+        <div class="panel" id="panel-username" role="tabpanel" aria-labelledby="tab-username">
+          <div class="field-row">
+            <div class="field">
+              <label for="input-from">From</label>
+              <input type="month" id="input-from">
+            </div>
+            <div class="field">
+              <label for="input-to">To</label>
+              <input type="month" id="input-to">
+            </div>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn--secondary" id="btn-fetch">Fetch games</button>
+            <span class="chip-status" id="fetch-status" role="status"></span>
+          </div>
+          <p class="hint">Leave the dates blank to pull everything. Chess.com's public API is free and needs no login.</p>
+        </div>
+
+        <div class="panel" id="panel-upload" role="tabpanel" aria-labelledby="tab-upload" hidden>
+          <div class="field">
+            <label for="input-files">PGN files</label>
+            <input type="file" id="input-files" multiple accept=".pgn">
+          </div>
+          <span class="chip-status" id="upload-status" role="status"></span>
+          <p class="hint">On chess.com: <strong>Archive</strong> → select games → <strong>Download</strong>.</p>
+        </div>
+      </section>
+
+      <section class="step" aria-labelledby="title-llm">
+        <div class="step__head">
+          <span class="step__num" aria-hidden="true">02</span>
+          <h2 class="step__title" id="title-llm">Your LLM</h2>
+        </div>
+
+        <div class="field">
+          <label for="select-provider">Provider</label>
+          <select id="select-provider">
+            <option value="openai">OpenAI</option>
+            <option value="anthropic">Anthropic</option>
+            <option value="gemini">Gemini</option>
+            <option value="openrouter">OpenRouter</option>
+            <option value="mock">Mock — no key, facts only</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="input-apikey">API key</label>
+          <input type="password" id="input-apikey" placeholder="sk-…" autocomplete="off" spellcheck="false">
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="check-savekey">
+          <span>Remember for this tab</span>
+        </label>
+
+        <p class="hint">Your key stays in this browser and is sent only to the provider you choose. Use a spend-limited, revocable key. “Remember” uses session storage and clears when the tab closes.</p>
+
+        <div class="field">
+          <label for="input-model">Model</label>
+          <input id="input-model" type="text" spellcheck="false">
+        </div>
+      </section>
+
+      <section class="step" aria-labelledby="title-custom">
+        <div class="step__head">
+          <span class="step__num" aria-hidden="true">03</span>
+          <h2 class="step__title" id="title-custom">Steer it <span class="step__optional">optional</span></h2>
+        </div>
+
+        <div class="field">
+          <label for="input-custom">Anything the coach should focus on</label>
+          <textarea id="input-custom" rows="3" placeholder="e.g. I only care about my blitz habits this month"></textarea>
+        </div>
+        <div class="chips" id="chips"></div>
+      </section>
+
+      <section class="step" aria-labelledby="title-run">
+        <div class="step__head">
+          <span class="step__num" aria-hidden="true">04</span>
+          <h2 class="step__title" id="title-run">Run</h2>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="check-deep-analysis">
+          <span>Deep analysis <span class="check__note">— check key moments with Stockfish</span></span>
+        </label>
+        <p class="hint">Off by default. Loads a chess engine into your browser the first time, then checks a handful of rule-picked positions. Slower, and the only thing that lets the report call a move a blunder rather than just describing material.</p>
+
+        <button type="button" class="btn btn--primary btn--block" id="btn-run">
+          <span class="btn__label">Run Tilt Mirror</span>
+        </button>
+        <p class="run-hint" id="run-hint" role="status">Load your games to begin.</p>
+      </section>
+
+    </form>
+
+    <section class="output" id="output" aria-labelledby="title-output">
+      <div class="output__bar">
+        <h2 class="output__title" id="title-output">Report</h2>
+        <button type="button" class="btn btn--ghost" id="btn-download" hidden>Download .md</button>
       </div>
-      <div id="panel-username">
-        <input id="input-username" placeholder="e.g. darshak05">
-        <input type="month" id="input-from">
-        <input type="month" id="input-to">
-        <button id="btn-fetch">Fetch games</button>
-        <span id="fetch-status"></span>
+
+      <div class="output__body">
+        <div class="console" id="status-log" role="log" aria-live="polite" aria-label="Progress"></div>
+
+        <div class="empty" id="empty-state">
+          <p class="empty__lead">Your report will appear here.</p>
+          <p class="empty__note">Every fact in it — the games, results, links, and collapse moves — is computed from your PGNs by code. The language model only writes the commentary on top.</p>
+        </div>
+
+        <article class="report" id="report"></article>
       </div>
-      <div id="panel-upload" hidden>
-        <input type="file" id="input-files" multiple accept=".pgn">
-        <p class="hint">On chess.com: Archive → select games → Download. Or use the fetch tab — the public API is free.</p>
-      </div>
-    </section>
-    <section>
-      <h2>2 · Your LLM</h2>
-      <select id="select-provider">
-        <option value="openai">OpenAI</option>
-        <option value="anthropic">Anthropic</option>
-        <option value="gemini">Gemini</option>
-        <option value="openrouter">OpenRouter</option>
-        <option value="mock">Mock (demo, no key)</option>
-      </select>
-      <input type="password" id="input-apikey" placeholder="API key (stays in your browser)" autocomplete="off">
-      <label><input type="checkbox" id="check-savekey"> remember key for this browser tab</label>
-      <p class="hint">Use a spend-limited, revocable key. Keys never leave your browser except to the provider you pick. "Remember" uses session storage and clears when the tab closes.</p>
-      <input id="input-model">
-    </section>
-    <section>
-      <h2>3 · Customize (optional)</h2>
-      <textarea id="input-custom" rows="3" placeholder="Anything you want the coach to focus on…"></textarea>
-      <div id="chips"></div>
-    </section>
-    <section>
-      <h2>4 · Report</h2>
-      <label>
-        <input type="checkbox" id="check-deep-analysis">
-        Deep analysis (optional): confirm a couple of key moments per pattern with a real chess engine (Stockfish, running in your browser)
-      </label>
-      <p class="hint">Off by default. Loads a WASM chess engine from a CDN the first time you use it, then evaluates a handful of rule-picked positions - this can take a bit and only makes engine-backed "blunder" claims possible; the core report works fully without it.</p>
-      <button id="btn-run">Run Tilt Mirror</button>
-      <pre id="status-log"></pre>
-      <article id="report"></article>
-      <button id="btn-download" hidden>Download .md</button>
     </section>
   </main>
+
+  <footer class="colophon">
+    <p>No account, no server, no analytics. <a href="https://github.com/artvandelay/download_chesscom_games">Source on GitHub</a>.</p>
+  </footer>
+
   <script
     src="https://cdn.jsdelivr.net/npm/marked@18.0.7/lib/marked.umd.js"
     integrity="sha384-7njNzKcJUBdezPGfqUrIFizi2QkXJH0M6wF3o1h9GE/nce6X4YdecMwh31B19yTi"
