@@ -37,3 +37,16 @@ To run the script, use the following command:
 
 ```sh
 python download_chesscom_games.py <username1> <username2> ... <base_directory>
+```
+
+## Tilt Mirror (web app)
+
+**Live app:** [https://artvandelay.github.io/download_chesscom_games/](https://artvandelay.github.io/download_chesscom_games/)
+
+Bring-your-own-key chess psychology analyzer. Runs fully in the browser (no server):
+
+1. **Load games** — fetch from Chess.com by username (public API, free), or upload `.pgn` files exported from Chess.com Archive.
+2. **Paste your LLM API key** — OpenAI, Anthropic, Gemini, OpenRouter, or Mock (facts-only report, no key needed).
+3. **Generate report** — code computes verified facts; the LLM only writes the coaching prose.
+
+Source lives in [`docs/`](docs/). Details: [`docs/README.md`](docs/README.md).

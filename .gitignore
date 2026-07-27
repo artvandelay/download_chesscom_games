@@ -1,2 +1,8 @@
 *.pgn
+!docs/test/*.pgn
 *.pyc
+.download_logs/
+spike/out/
+spike/node_modules/
+.env
+.env.*

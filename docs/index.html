@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://unpkg.com; worker-src 'self' https://unpkg.com; style-src 'self'; connect-src https://api.chess.com https://api.openai.com https://api.anthropic.com https://generativelanguage.googleapis.com https://openrouter.ai https://unpkg.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
+  <title>Tilt Mirror</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Tilt Mirror</h1>
+    <p>Your games. Your patterns. Your own LLM key.</p>
+  </header>
+  <main>
+    <section>
+      <h2>1 · Your games</h2>
+      <div class="tabs">
+        <button id="tab-username">Chess.com username</button>
+        <button id="tab-upload">Upload PGN files</button>
+      </div>
+      <div id="panel-username">
+        <input id="input-username" placeholder="e.g. darshak05">
+        <input type="month" id="input-from">
+        <input type="month" id="input-to">
+        <button id="btn-fetch">Fetch games</button>
+        <span id="fetch-status"></span>
+      </div>
+      <div id="panel-upload" hidden>
+        <input type="file" id="input-files" multiple accept=".pgn">
+        <p class="hint">On chess.com: Archive → select games → Download. Or use the fetch tab — the public API is free.</p>
+      </div>
+    </section>
+    <section>
+      <h2>2 · Your LLM</h2>
+      <select id="select-provider">
+        <option value="openai">OpenAI</option>
+        <option value="anthropic">Anthropic</option>
+        <option value="gemini">Gemini</option>
+        <option value="openrouter">OpenRouter</option>
+        <option value="mock">Mock (demo, no key)</option>
+      </select>
+      <input type="password" id="input-apikey" placeholder="API key (stays in your browser)" autocomplete="off">
+      <label><input type="checkbox" id="check-savekey"> remember key for this browser tab</label>
+      <p class="hint">Use a spend-limited, revocable key. Keys never leave your browser except to the provider you pick. "Remember" uses session storage and clears when the tab closes.</p>
+      <input id="input-model">
+    </section>
+    <section>
+      <h2>3 · Customize (optional)</h2>
+      <textarea id="input-custom" rows="3" placeholder="Anything you want the coach to focus on…"></textarea>
+      <div id="chips"></div>
+    </section>
+    <section>
+      <h2>4 · Report</h2>
+      <label>
+        <input type="checkbox" id="check-deep-analysis">
+        Deep analysis (optional): confirm a couple of key moments per pattern with a real chess engine (Stockfish, running in your browser)
+      </label>
+      <p class="hint">Off by default. Loads a WASM chess engine from a CDN the first time you use it, then evaluates a handful of rule-picked positions - this can take a bit and only makes engine-backed "blunder" claims possible; the core report works fully without it.</p>
+      <button id="btn-run">Run Tilt Mirror</button>
+      <pre id="status-log"></pre>
+      <article id="report"></article>
+      <button id="btn-download" hidden>Download .md</button>
+    </section>
+  </main>
+  <script
+    src="https://cdn.jsdelivr.net/npm/marked@18.0.7/lib/marked.umd.js"
+    integrity="sha384-7njNzKcJUBdezPGfqUrIFizi2QkXJH0M6wF3o1h9GE/nce6X4YdecMwh31B19yTi"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/dompurify@3.4.12/dist/purify.min.js"
+    integrity="sha384-piCcpDdJ7qVeK4Tv8Z6Hpcr3ZBIgP16TxQTPVfsLFdZ5uDgwc3Y8Ho7oUnqf12qu"
+    crossorigin="anonymous"
+  ></script>
+  <script type="module" src="js/ui.js"></script>
+</body>
+</html>
