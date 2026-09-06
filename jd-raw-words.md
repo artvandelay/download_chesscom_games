@@ -36,3 +36,10 @@ then if I click on show then open the finder to where it si downloaded
 
 curreently this is not working
 
+## 2026-09-07 — no subagent waste
+
+Source: chat.
+
+that waste of tokens just run the launchd type job that was the whole plan!!?!?!?!?
+
+
